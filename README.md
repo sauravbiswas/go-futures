@@ -59,9 +59,7 @@ By introducing **chaining mechanisms**, Go developers can:
 
 ---
 
-### 🔄 Example Scenario in Go
-
-### 🔄 Example: Chained Async Operations in Go
+###  Example: Chained Async Operations in Go
 
 Here's an example using a hypothetical `futures` package that supports chaining like `Promise` or `CompletableFuture`:
 
@@ -69,9 +67,11 @@ Here's an example using a hypothetical `futures` package that supports chaining 
 	// Create a future and chain multiple computations
 	future := futures.NewFuture(func() (any, error) {
 		// Call some API which is blocking
+        time.Sleep(3 * time.Second)
 		return "Start", nil
 	}).Then(func(res any) (any, error) {
-		// Call some I/O operation
+		// Call some I/O operation, here calling sleep
+        time.sleep(2 * time.Second)
 		str, ok := res.(string)
 		if !ok {
 			return nil, fmt.Errorf("expected string, got %T", res)
@@ -79,6 +79,7 @@ Here's an example using a hypothetical `futures` package that supports chaining 
 		return str + " → Step 1", nil
 	}).Then(func(res any) (any, error) {
 		// Call some other I/O operation
+        time.Sleep(4 * time.Second)
 		str, ok := res.(string)
 		if !ok {
 			return nil, fmt.Errorf("expected string, got %T", res)
@@ -114,7 +115,7 @@ Here's an example using a hypothetical `futures` package that supports chaining 
 ### 🛠️ Installation
 
 ```bash
-go get github.com/yourusername/go-futures
+go get github.com/sauravbiswas/go-futures
 ```
 
 ### 🧪 Running Tests
